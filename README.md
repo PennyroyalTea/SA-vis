@@ -10,7 +10,7 @@ If the path is wrong, you'll see actual path in error message.
 Also it writes the energy to the console.
  
 ## how to run in IDEA?
-It's developed in IDEA, so just pull it there and it should work.
+It's developed in IDEA, so just clone it there and it should work.
 Keep in mind that relative path addresses somehow don't work here, 
 so better use absolute address to your queens file.
 
