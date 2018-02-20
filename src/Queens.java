@@ -1,9 +1,7 @@
 import java.applet.*;
 import java.awt.*;
 import java.io.*;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Queens extends Applet {
 
@@ -11,7 +9,7 @@ public class Queens extends Applet {
     private int screenWidth = 640, screenHeight = 640; // default screen size
     final private boolean USE_DEFAULT_SCREEN_SIZE = true;
 
-    String dataRef = "Queens.txt";
+    String fileRef = "Queens.txt";
 
     private final Color gridColor = Color.GREEN;
     private final Color emptyCellColor = Color.WHITE;
@@ -120,20 +118,31 @@ public class Queens extends Applet {
 
     private int[] read() throws Exception {
 
-        BufferedReader br = new BufferedReader(new FileReader(dataRef));
-
-        String line = br.readLine();
-
-        StringTokenizer st = new StringTokenizer(line);
         ArrayList<Integer> permutation = new ArrayList<>();
 
-        while (st.hasMoreTokens()) {
-            String nextToken = st.nextToken();
-            try {
-                permutation.add(Integer.parseInt(nextToken));
-            } catch (NumberFormatException e) {
-                System.err.println(nextToken + " is not a number!");
-                permutation.add(0);
+        File fileToRead = new File(fileRef);
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(fileToRead));
+        } catch (IOException e) {
+            System.err.println("No file in " + fileToRead.getAbsolutePath());
+            return new int[0];
+        }
+
+        while (true) {
+            String line = br.readLine();
+            if (line == null) break;
+
+            StringTokenizer st = new StringTokenizer(line);
+
+            while (st.hasMoreTokens()) {
+                String nextToken = st.nextToken();
+                try {
+                    permutation.add(Integer.parseInt(nextToken));
+                } catch (NumberFormatException e) {
+                    System.err.println(nextToken + " is not a number!");
+                    permutation.add(0);
+                }
             }
         }
 
