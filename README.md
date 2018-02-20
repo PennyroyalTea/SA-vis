@@ -2,7 +2,7 @@
 Visualizes one's solution in queens problem and counts energy (number of "bad" pairs).
 
 ## how to use?
-The programs draws your answer to [Queens problem](http://informatics.mccme.ru/mod/statements/view.php?id=1975).
+The program draws your answer to [Queens problem](http://informatics.mccme.ru/mod/statements/view.php?id=1975).
 Your answer must be a permutation of numbers 1 to n like in problem statement.
 Put it in a file and write its path to variable **fileRef**.
 If the path is wrong, you'll see actual path in error message.
