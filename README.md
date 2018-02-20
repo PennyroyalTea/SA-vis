@@ -20,7 +20,7 @@ Create new project and put Queens.java there. Compile it and it should work.
 ## how to run in other IDEs?
 Who knows?
 
-### Set-up
+## Set-up
 Change these variables to make it more comfortable for you:
 * **fileRef** — address of file with answer.
 * **screenWidth**, **screenHeight** — default size of window.
