@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Simulated Annealing Problems Visualisation.iml" filepath="$PROJECT_DIR$/Simulated Annealing Problems Visualisation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Queens problem visualization.iml" filepath="$PROJECT_DIR$/Queens problem visualization.iml" />
     </modules>
   </component>
 </project>

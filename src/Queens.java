@@ -138,7 +138,7 @@ public class Queens extends Applet {
             while (st.hasMoreTokens()) {
                 String nextToken = st.nextToken();
                 try {
-                    permutation.add(Integer.parseInt(nextToken));
+                    permutation.add(Integer.parseInt(nextToken) - 1);
                 } catch (NumberFormatException e) {
                     System.err.println(nextToken + " is not a number!");
                     permutation.add(0);
