@@ -56,17 +56,28 @@ public class TSP extends Applet {
             path[i].y = mapHeight - path[i].y - 1; // reverse y
         }
 
+        boolean[][] isInPath = new boolean[n][m];
+        for (Position p : path) {
+            isInPath[p.y][p.x] = true;
+        }
+
         // draws empty cells
         g.setColor(emptyCellColor);
 
         g.fillRect(0, 0, tileWidth * m, tileHeight * n);
 
-        //draws occupied cells
-        g.setColor(occupiedCellColor);
+        //draws occupied cells and unused cells
 
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
                 if (!map[i][j]) continue;
+
+                if (isInPath[i][j]) {
+                    g.setColor(occupiedCellColor);
+                } else {
+                    g.setColor(penaltyCellColor);
+                }
+
                 g.fillRect(j * tileWidth, i * tileHeight, tileWidth, tileHeight);
             }
         }
@@ -88,6 +99,36 @@ public class TSP extends Applet {
         for (int i = 0; i + 1 < path.length; ++i) {
             g.drawLine(path[i].x * tileWidth + tileWidth / 2, path[i].y * tileHeight + tileHeight / 2,
                     path[i + 1].x * tileWidth + tileWidth / 2, path[i + 1].y * tileHeight + tileHeight / 2);
+        }
+
+        // calculates score
+        double pathLength = 0d;
+        for (int i = 0; i + 1 < path.length; ++i) {
+            long dx = path[i].x - path[i + 1].x; //may be negative
+            long dy = path[i].y - path[i + 1].y;
+
+            pathLength += Math.sqrt(dx * dx + dy * dy);
+        }
+        boolean pathVisitsAllVertexes = true;
+
+        loop:
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (map[i][j] && !isInPath[i][j]) {
+                    pathVisitsAllVertexes = false;
+                    break loop;
+                }
+            }
+        }
+
+        if (printedAnswer) return;
+        printedAnswer = true;
+
+        if (!pathVisitsAllVertexes) {
+            System.out.println("Not all vertexes are visited!" + System.lineSeparator() + "score: 0");
+        } else {
+            double score = 10000d / (pathLength - 750d);
+            System.out.println("score: " + score);
         }
     }
 
@@ -207,7 +248,6 @@ public class TSP extends Applet {
             }
         }
 
-        System.out.println((x - 1) + " " + (y - 1));
         return new Position(x, y - 1);
     }
 
