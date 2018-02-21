@@ -9,14 +9,16 @@ public class TSP extends Applet {
     private int screenWidth = 640, screenHeight = 640; // default screen size
     final private boolean USE_DEFAULT_SCREEN_SIZE = true;
 
-    String fileRef = "TSP_result.txt";
-    String mapRef = "TSP_map.txt";
+    private String resRef = "TSP_result.txt";
+    private String mapRef = "TSP_map.txt";
 
     private final Color gridColor = Color.GREEN;
     private final Color emptyCellColor = Color.WHITE;
     private final Color occupiedCellColor = Color.BLACK;
     private final Color penaltyCellColor = Color.RED;
-    private final Color lineColor = Color.BLUE;
+    private final Color pathColor = Color.BLUE;
+
+    private int mapWidth = 0, mapHeight = 0; // do not change!
 
     public void paint(Graphics g1) {
 
@@ -38,8 +40,8 @@ public class TSP extends Applet {
         }
     }
 
-
     private boolean printedAnswer = false;
+
 
     private void draw(Graphics2D g) throws Exception {
         boolean[][] map = readMap();
@@ -48,6 +50,11 @@ public class TSP extends Applet {
 
         int tileWidth = screenWidth / m;
         int tileHeight = screenHeight / n;
+
+        Position[] path = readPath();
+        for (int i = 0; i < path.length; ++i) {
+            path[i].y = mapHeight - path[i].y - 1; // reverse y
+        }
 
         // draws empty cells
         g.setColor(emptyCellColor);
@@ -74,9 +81,15 @@ public class TSP extends Applet {
         for (int i = 0; i < m; ++i) {
             g.drawLine((i + 1) * tileWidth, 0, (i + 1) * tileWidth, n * tileHeight);
         }
-    }
 
-    private int mapWidth = 0, mapHeight = 0;
+        // draws path
+        g.setColor(pathColor);
+
+        for (int i = 0; i + 1 < path.length; ++i) {
+            g.drawLine(path[i].x * tileWidth + tileWidth / 2, path[i].y * tileHeight + tileHeight / 2,
+                    path[i + 1].x * tileWidth + tileWidth / 2, path[i + 1].y * tileHeight + tileHeight / 2);
+        }
+    }
 
     private boolean[][] readMap() throws IOException {
 
@@ -142,7 +155,61 @@ public class TSP extends Applet {
         return result;
     }
 
+    private Position[] readPath() throws IOException {
+        File fileToRead = new File(resRef);
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(fileToRead));
+        } catch (IOException e) {
+            System.err.println("No file in " + fileToRead.getAbsolutePath());
+            return new Position[0];
+        }
 
+        ArrayList<Position> resultList = new ArrayList<>();
+
+        while (true) {
+            String curLine = br.readLine();
+            if (curLine == null) break;
+
+            StringTokenizer st = new StringTokenizer(curLine);
+
+            while (st.hasMoreTokens()) {
+                String token = st.nextToken();
+                resultList.add(getPos(token));
+            }
+        }
+
+        Position[] result = resultList.toArray(new Position[0]);
+
+        return result;
+    }
+
+    // returns the position of an Elements by parsing s e.g. "aa104" -> (52, 103). Uses 0-numeration.
+    private Position getPos(String s) {
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            char cur = s.charAt(i);
+
+            if (Character.isDigit(cur)) {
+                y = y * 10 + (cur - '0');
+                continue;
+            }
+
+            if (cur >= 'a' && cur <= 'z') {
+                x = (x * 10) + (cur - 'a');
+                continue;
+            }
+
+            if (cur >= 'A' && cur <= 'Z') {
+                x = (x * 10) + (cur - 'A' + 26);
+                continue;
+            }
+        }
+
+        System.out.println((x - 1) + " " + (y - 1));
+        return new Position(x, y - 1);
+    }
 
     private class Position {
         int x, y;
