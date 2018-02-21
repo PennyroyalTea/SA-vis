@@ -12,7 +12,7 @@ public class TSP extends Applet {
     private String resRef = "TSP_result.txt";
     private String mapRef = "TSP_map.txt";
 
-    private final Color gridColor = Color.GREEN;
+    private final Color gridColor = Color.WHITE;
     private final Color emptyCellColor = Color.WHITE;
     private final Color occupiedCellColor = Color.BLACK;
     private final Color penaltyCellColor = Color.RED;
