@@ -124,10 +124,11 @@ public class TSP extends Applet {
         if (printedAnswer) return;
         printedAnswer = true;
 
+        double score = 10000d / (pathLength - 750d); // SCORE CALCULATION
+
         if (!pathVisitsAllVertexes) {
             System.out.println("Not all vertexes are visited!" + System.lineSeparator() + "score: 0");
         } else {
-            double score = 10000d / (pathLength - 750d);
             System.out.println("score: " + score);
         }
     }
