@@ -25,7 +25,7 @@ so better use absolute address to your queens file.
 Create new project and put corresponding _.java_ file there. Compile it and it should work.
 
 ## how to run in other IDEs?
-Who knows?
+Who knows? Use console!
 
 ## Set-up
 ### Queens
@@ -36,6 +36,6 @@ Who knows?
 * if you want to change scoring formula, you can change it in line with comment _"SCORE CALCULATION"_
 ### Both
 * **screenWidth**, **screenHeight** — default size of window.
-* **USE_DEFAULT_SCREEN_SIZE** — if true, uses previous window size.
+* **USE_DEFAULT_SCREEN_SIZE** — if true, uses default window size.
 Otherwise, uses your monitor resolution (can be buggy).
 * ***color** — colors of corresponding elements in app. 
